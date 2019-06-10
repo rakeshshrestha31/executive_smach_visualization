@@ -190,6 +190,10 @@ class ContainerNode():
                 packagename = modulename[0:modulename.find('.')]
                 roslib.load_manifest(packagename)
                 self._local_data._data = pickle.loads(msg.local_data)
+            except Exception as e:
+                # catches errors when local_data is unpicklable
+                rospy.logerr(str(e))
+                break
 
         # Store the info string
         self._info = msg.info
